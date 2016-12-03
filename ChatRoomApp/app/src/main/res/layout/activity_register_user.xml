@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_register_user"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.daniel.chatroomapp.RegisterUser"
+    android:orientation="vertical"
+    android:background="@android:color/holo_purple">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:background="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="2dp"/>
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:background="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="2dp"/>
+
+    <EditText
+        android:id="@+id/etConfirmEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Email"
+        android:background="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="2dp"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:background="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="2dp"/>
+
+    <EditText
+        android:id="@+id/etConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:background="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="2dp"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="registerUser"
+        android:text="Register"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>

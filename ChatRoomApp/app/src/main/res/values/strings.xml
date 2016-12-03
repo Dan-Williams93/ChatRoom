@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ChatRoomApp</string>
+
+
+    <!--SHARED PREFERENCES -->
+
+    <string name="PREFS_NAME">ChatRoomAppPreferences</string>
+
+    <string name="FCM_TOKEN_PREF">USERS_FCM_Token</string>
+
+    <string name="isLogged">isLogged</string>
+    <string name="UserID">UserID</string>
+    <string name="UserEmail">UserEmail</string>
+    <string name="UserName">Name</string>
+    <string name="ActiveUserToken">ActiveUserToken</string>
+    <string name="UserBio">UserBio</string>
+    <string name="profileImageURL">userProfileImageURL</string>
+
+
+</resources>
