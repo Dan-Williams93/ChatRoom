@@ -32,7 +32,8 @@ public class FindFriends extends AppCompatActivity {
 
     private EditText etSearchFriends;
     private ListView lvResults;
-    private static final String strSearchFriendsURL = "http://80.0.165.187/chatroomapp/search_friend.php";
+    //private static final String strSearchFriendsURL = "http://80.0.165.187/chatroomapp/search_friend.php";
+    private String strSearchFriendsURL;
 
     private ArrayList<String> arFriendsNames = new ArrayList<String>();
     private ArrayList<String> arFriendsEmail = new ArrayList<String>();
@@ -50,6 +51,8 @@ public class FindFriends extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_friends);
+
+        strSearchFriendsURL = getString(R.string.SearchFriendsURL);
 
         bitDefaultProfileImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.anonymous);
 
@@ -84,6 +87,7 @@ public class FindFriends extends AppCompatActivity {
             }
         });
 
+        //region LIST VIEW CLICK OBSERVER
         lvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,7 +113,9 @@ public class FindFriends extends AppCompatActivity {
 
             }
         });
+        //endregion
 
+        SearchFriends("");
     }
 
     private void SearchFriends(final String strSearchCredential) {

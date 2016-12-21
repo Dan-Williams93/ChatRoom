@@ -35,7 +35,8 @@
             style="?android:attr/buttonBarButtonStyle"
             android:background="#ad00d7"
             android:text="MESSAGES"
-            android:elevation="24dp" />
+            android:elevation="24dp"
+            android:onClick="goToMessages" />
 
         <Button
             android:layout_width="0dp"

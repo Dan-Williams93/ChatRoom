@@ -38,13 +38,18 @@ public class Login extends AppCompatActivity {
     private Bitmap bitDefaultProfileImage;
     private Bitmap bitProfileImage;
 
-    private static final String strAuthenticationURL = "http://80.0.165.187/chatroomapp/authenticate_user.php";
-    private static final String strUpdateTokenURL = "http://80.0.165.187/chatroomapp/update_token.php";
+    //private static final String strAuthenticationURL = "http://80.0.165.187/chatroomapp/authenticate_user.php";
+    //private static final String strUpdateTokenURL = "http://80.0.165.187/chatroomapp/update_token.php";
+    private String strAuthenticationURL;
+    private String strUpdateTokenURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        strAuthenticationURL = getString(R.string.AuthenticationURL);
+        strUpdateTokenURL = getString(R.string.UpdateTokenURL);
 
         etEmail = (EditText)findViewById(R.id.etEmail);
         etPassword = (EditText)findViewById(R.id.etPassword);
@@ -63,6 +68,10 @@ public class Login extends AppCompatActivity {
         if (strEmail.equals("") || strPassword.equals(null)){
             Toast.makeText(this, "Please enter your credentials", Toast.LENGTH_LONG).show();
         }else{
+
+            //GET TOKEN FROM SHARED PREFS
+            SharedPreferences ChatPrefs = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
+            final String strNewToken = ChatPrefs.getString(getString(R.string.FCM_TOKEN_PREF), "");
 
             StringRequest authenticationRequest = new StringRequest(Request.Method.POST, strAuthenticationURL,
                     new Response.Listener<String>() {
@@ -88,7 +97,7 @@ public class Login extends AppCompatActivity {
                                             String strUserID = jsonMessage.getString("user_id");
                                             String strEmail = jsonMessage.getString("email");
                                             String strName = jsonMessage.getString("Username");
-                                            String strFCMToken = jsonMessage.getString("registration_token");
+                                            //String strFCMToken = jsonMessage.getString("registration_token");
                                             String strBio = jsonMessage.getString("user_bio");
                                             String strProfileImageURL = jsonMessage.getString("profile_image_url");
 
@@ -96,7 +105,8 @@ public class Login extends AppCompatActivity {
                                             auCurrentUser.setUserID(strUserID);
                                             auCurrentUser.setEmail(strEmail);
                                             auCurrentUser.setName(strName);
-                                            auCurrentUser.setUsersFCMToken(strFCMToken);
+                                            //auCurrentUser.setUsersFCMToken(strFCMToken);
+                                            auCurrentUser.setUsersFCMToken(strNewToken);
                                             auCurrentUser.setBio(strBio);
 
                                             //getimage or set efault
@@ -104,16 +114,19 @@ public class Login extends AppCompatActivity {
                                                 auCurrentUser.setUserProfileImage(bitDefaultProfileImage);
                                             }else{
 
-                                                //DOWNLOAD IMAGE FROM URL AND STORE IN ACIVE USER
+                                                //DOWNLOAD IMAGE FROM URL AND STORE IN ACIVE USER USING VOLLEY
+                                                //ImageRequest imageRequest = new ImageRequest()
+                                                //Set default in respons
+                                                //set default in error
                                             }
 
                                             auCurrentUser.setStrProfileImageURL(strProfileImageURL);
 
                                             //STORE USE DETAILS SO DOESN'T HAVE TO LOG IN EVERY TIME
-                                            StoreForReturn(true, strUserID, strEmail, strName, strFCMToken, strBio, strProfileImageURL); //ADD BIO
+                                            StoreForReturn(true, strUserID, strEmail, strName, strNewToken, strBio, strProfileImageURL); //ADD BIO
 
                                             //UPDATE USERS TOKEN IN DATABASE
-                                            UpdateToken(strUserID, strFCMToken);
+                                            UpdateToken(strUserID, strNewToken);
 
                                         }
                                     }

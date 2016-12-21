@@ -15,6 +15,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
@@ -35,7 +36,8 @@ public class Splash extends AppCompatActivity {
     private Boolean isLogged = false;
     private ActiveUser auCurrentUser;
     private String strUserID, strToken;
-    private static final String strUpdateTokenURL = "http://80.0.165.187/chatroomapp/update_token.php";
+    //private static final String strUpdateTokenURL = "http://80.0.165.187/chatroomapp/update_token.php";
+    private String strUpdateTokenURL;
     private TextView tvMessage;
     private ProgressBar progLoading;
 
@@ -48,6 +50,8 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        strUpdateTokenURL = getString(R.string.UpdateTokenURL);
 
         bitDefaultProfileImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.anonymous);
         tvMessage = (TextView)findViewById(R.id.tvMessage);
@@ -77,7 +81,10 @@ public class Splash extends AppCompatActivity {
                 auCurrentUser.setUserProfileImage(bitDefaultProfileImage);
             }else{
 
-                //DOWNLOAD IMAGE FROM URL AND STORE IN ACTIVE USER
+                //DOWNLOAD IMAGE FROM URL AND STORE IN ACTIVE USER USING VOLLEY
+                //ImageRequest imageRequest = new ImageRequest()
+                //Set default in respons
+                //set default in error
             }
 
             auCurrentUser.setStrProfileImageURL(strProfileImageURL);

@@ -42,4 +42,6 @@ public class VolleyQueueSingleton {
         getRequestQueue().add(request);
     }
 
+    //ADDIMAGE DOWWNLOADER
+
 }

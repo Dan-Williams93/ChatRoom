@@ -17,4 +17,33 @@
     <string name="profileImageURL">userProfileImageURL</string>
 
 
+
+    <!--URL'S-->
+    <!--HOME-->
+    <!--<string name="UpdateTokenURL">http://80.0.165.187/chatroomapp/update_token.php</string>-->
+    <!--<string name="RegisterUserURL">http://80.0.165.187/chatroomapp/register_user.php</string>-->
+    <!--<string name="GetPrivateChatDetailsURL">http://80.0.165.187/chatroomapp/getpcdetails.php</string>-->
+    <!--<string name="SearchPrivateChatDetailsURL">http://80.0.165.187/chatroomapp/search_pc.php</string>-->
+    <!--<string name="AuthenticationURL">http://80.0.165.187/chatroomapp/authenticate_user.php</string>-->
+    <!--<string name="SearchFriendsURL">http://80.0.165.187/chatroomapp/search_friend.php</string>-->
+    <!--<string name="FetchMessagesURL">http://80.0.165.187/chatroomapp/fetch_private_messages.php</string>-->
+
+    <!--STEVES-->
+    <string name="UpdateTokenURL">http://82.17.251.148/chatroomapp/update_token.php</string>
+    <string name="RegisterUserURL">http://82.17.251.148/chatroomapp/register_user.php</string>
+    <string name="GetPrivateChatDetailsURL">http://82.17.251.148/chatroomapp/getpcdetails.php</string>
+    <string name="SearchPrivateChatDetailsURL">http://82.17.251.148/chatroomapp/search_pc.php</string>
+    <string name="AuthenticationURL">http://82.17.251.148/chatroomapp/authenticate_user.php</string>
+    <string name="SearchFriendsURL">http://82.17.251.148/chatroomapp/search_friend.php</string>
+    <string name="FetchMessagesURL">http://82.17.251.148/chatroomapp/fetch_private_messages.php</string>
+    <string name="SendNotificationURL">http://82.17.251.148/chatroomapp/send_notification.php</string>
+    <string name="SendMessageURL">http://82.17.251.148/chatroomapp/send_message.php</string>
+    <string name="ChatCheckURL">http://82.17.251.148/chatroomapp/check_private_chat.php</string>
+    <string name="CreateChatURL">http://82.17.251.148/chatroomapp/create_pc.php</string>
+
+
+
+    <!--82.17.251.148-->
+
+
 </resources>

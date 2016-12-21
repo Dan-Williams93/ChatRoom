@@ -23,12 +23,15 @@ public class RegisterUser extends AppCompatActivity {
 
     private String strName, strPassword, strConfirmPassword, strEmail, strConfirmEmail, strFCM_Reg_Token;
 
-    private static final String strRegisterUserURL = "http://80.0.165.187/chatroomapp/register_user.php";
+    //private static final String strRegisterUserURL = "http://80.0.165.187/chatroomapp/register_user.php";
+    private String strRegisterUserURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+
+        strRegisterUserURL = getString(R.string.RegisterUserURL);
 
         etName = (EditText)findViewById(R.id.etName);
         etEmail = (EditText)findViewById(R.id.etEmail);

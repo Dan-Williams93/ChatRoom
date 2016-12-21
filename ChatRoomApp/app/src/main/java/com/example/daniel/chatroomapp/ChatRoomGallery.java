@@ -33,6 +33,11 @@ public class ChatRoomGallery extends AppCompatActivity {
     }
 
     public void viewMyProfile(View view) {
+
         startActivity(new Intent(this, MyProfile.class));
+    }
+
+    public void goToMessages(View view){
+        startActivity(new Intent(this, PrivateMessages.class));
     }
 }

@@ -1,5 +1,6 @@
 package com.example.daniel.chatroomapp;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -8,48 +9,180 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Profile extends AppCompatActivity {
 
-    private String strUserName, strUserID, strEmail, strUserBio;
-    private Bitmap bitProfilePicture;
+    private String strUserName, strUserID, strEmail, strUserBio, strActiveUserID, strChatId, strChatName, strNewChatID;
+    private String strChatCheckURL, strCreateChatURL;
+    private Bitmap bitProfileImage;
 
     private ImageView imgProfileImage;
-    private TextView tvTest;
+    private TextView tvName, tvBio;
+
+    private ActiveUser auActiveUser = ActiveUser.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        strActiveUserID = auActiveUser.getUserID();
+        strChatCheckURL = getString(R.string.ChatCheckURL);
+        strCreateChatURL = getString(R.string.CreateChatURL);
+
         imgProfileImage = (ImageView)findViewById(R.id.imgProfileImage);
-        tvTest = (TextView)findViewById(R.id.tvTest);
+        tvName = (TextView)findViewById(R.id.tvName);
+        tvBio = (TextView)findViewById(R.id.tvBio);
 
         strUserName = getIntent().getStringExtra("username");
         strUserID = getIntent().getStringExtra("user_id");
         strEmail = getIntent().getStringExtra("email");
         strUserBio = getIntent().getStringExtra("bio");
         byte[] byteArray = getIntent().getByteArrayExtra("profileImage");
-        Bitmap bitProfileImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        bitProfileImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
         imgProfileImage.setImageBitmap(bitProfileImage);
 
-        String strstring = strUserName + " " + strUserID + " " + strEmail + " " + strUserBio;
 
-        tvTest.setText(strstring);
-
+        tvName.setText(strUserName);
+        tvBio.setText("Bio:\n" + strUserBio);
 
     }
 
     public void sendMessage(View view){
 
-        //QUERY DATABASE TO SEE IF CHAT BETWEEN TWO PARTIES EXISTS
-        //SELECT * FROM private_chat WHERE (member_1_id='user1_id' OR member_1_id='user2_id') AND (member_2_id='user1_id' or member_2_id='user2_id');
+        StringRequest chatCheckRequest = new StringRequest(Request.Method.POST, strChatCheckURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String strResult = jsonObject.getString("result");
+
+                            if (strResult.equals("1")){
+
+                                startChat(jsonObject);
 
 
-        //IF THERE IS A RESULT GET CHAT ID, SEND IT TO CHATROOM ACTIVITY TO GET MESSAGES
+                            }else{
+                                createNewChat();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-        //IF NO MESSAGES CREATE NEW CHAT INSERT INTO DATABASE AND THEN OPEN NE CHAT ACTIVITY
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("active_id", strActiveUserID);
+                params.put("recipient_id", strUserID );
+                return params;
+            }
+        };
 
-        //IN PRIVATE MESSAGES ACTIVITY QUERY DATABASASE TO GET CHAT DETAILS
+        VolleyQueueSingleton.getmInstance(Profile.this).addToRequestQueue(chatCheckRequest);
+    }
+
+    public void startChat(JSONObject jsonResponse){
+
+        try {
+            JSONArray jsonArray = jsonResponse.getJSONArray("response");
+
+            for (int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonMessage = jsonArray.getJSONObject(i);
+                strChatId = jsonMessage.getString("chat_id");
+            }
+
+            Intent chatIntent = new Intent(Profile.this, ChatRoom.class);
+            chatIntent.putExtra("Chat_ID", strChatId);
+            chatIntent.putExtra("Chat_Name", strUserName);
+            chatIntent.putExtra("recipient_id", strUserID);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitProfileImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            chatIntent.putExtra("Chat_Image", byteArray);
+
+            startActivity(chatIntent);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createNewChat(){
+
+        strChatName = auActiveUser.getName()+","+strUserName;
+
+        StringRequest newChatRequest = new StringRequest(Request.Method.POST, strCreateChatURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String strResult = jsonObject.getString("result");
+
+                            if (strResult.equals("1")){
+                                strNewChatID = jsonObject.getString("chat_id");
+                                startNewChat();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("active_id", strActiveUserID);
+                params.put("recipient_id", strUserID);
+                params.put("chat_name", strChatName);
+                return params;
+            }
+        };
+
+        VolleyQueueSingleton.getmInstance(Profile.this).addToRequestQueue(newChatRequest);
+    }
+
+    public void startNewChat(){
+        Intent chatIntent = new Intent(Profile.this, ChatRoom.class);
+        chatIntent.putExtra("Chat_ID", strNewChatID);
+        chatIntent.putExtra("Chat_Name", strUserName);
+        chatIntent.putExtra("recipient_id", strUserID);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitProfileImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        chatIntent.putExtra("Chat_Image", byteArray);
+
+        startActivity(chatIntent);
     }
 }

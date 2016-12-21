@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.SyncStateContract;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -31,7 +32,7 @@ public class FcmMessagingService extends FirebaseMessagingService {
         }
 
 
-        Intent intent = new Intent(this, Login.class);
+        Intent intent = new Intent(this, Splash.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent , PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
@@ -43,8 +44,19 @@ public class FcmMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
+
+        sendNotification(title, messgae, id);
     }
 
     private void sendNotification(String title, String message, String id){
+
+        //Creating a broadcast intent
+        Intent pushNotification = new Intent("pushnotification");
+        //Adding notification data to the intent
+        pushNotification.putExtra("message", message);
+        pushNotification.putExtra("name", title);
+        pushNotification.putExtra("id", id);
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
     }
 }

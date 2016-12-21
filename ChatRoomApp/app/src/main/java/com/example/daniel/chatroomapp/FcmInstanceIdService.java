@@ -30,7 +30,7 @@ public class FcmInstanceIdService extends FirebaseInstanceIdService {
         editor.putString(getString(R.string.FCM_TOKEN_PREF), strRecentToken);
         editor.commit();
 
-        //sendTokenToServer(strRecentToken);
+        sendTokenToServer(strRecentToken);
 
     }
 
@@ -40,7 +40,7 @@ public class FcmInstanceIdService extends FirebaseInstanceIdService {
         //retrieve active user from either user class or shared preferences
         //update database
         //will need a new PHP script to update refference in database
-        String strUpdateTokenURL = "";
+        String strUpdateTokenURL = "http://80.0.165.187/chatroomapp/update_token.php";
 
         SharedPreferences ChatRoomPrefs = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
         Boolean isLogged = ChatRoomPrefs.getBoolean(getString(R.string.isLogged), false);
