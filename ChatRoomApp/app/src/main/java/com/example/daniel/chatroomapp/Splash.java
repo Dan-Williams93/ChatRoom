@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -110,7 +111,7 @@ public class Splash extends AppCompatActivity {
                                 delayHandler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                       startActivity(new Intent(Splash.this, ChatRoomGallery.class));
+                                        startActivity(new Intent(Splash.this, ChatRoomGallery.class));
                                         finish();
                                     }
                                 },2000);
@@ -131,6 +132,10 @@ public class Splash extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
+                    //CHECK FOR ERROR AND DISPLAY MESSAGE
+                    progLoading.setVisibility(View.INVISIBLE);
+                    //CHANGE TO DIALOG
+                    Toast.makeText(Splash.this, "THERE HAS BEEN AN ERROR" + error, Toast.LENGTH_LONG).show();
                 }
             })
             {

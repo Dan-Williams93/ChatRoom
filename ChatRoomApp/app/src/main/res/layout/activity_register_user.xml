@@ -10,57 +10,55 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.daniel.chatroomapp.RegisterUser"
     android:orientation="vertical"
-    android:background="@android:color/holo_purple">
+    android:background="@drawable/roomchatgradient">
 
     <EditText
         android:id="@+id/etName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:hint="Name"
-        android:background="@android:color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:padding="2dp"/>
+        android:maxLines="1"
+        android:singleLine="true"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@android:color/white"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:hint="Email"
-        android:background="@android:color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:padding="2dp"/>
-
-    <EditText
-        android:id="@+id/etConfirmEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Confirm Email"
-        android:background="@android:color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:padding="2dp"/>
+        android:maxLines="1"
+        android:singleLine="true"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@android:color/white"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:hint="Password"
-        android:background="@android:color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:padding="2dp"/>
+        android:maxLines="1"
+        android:singleLine="true"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@android:color/white"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:id="@+id/etConfirmPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:hint="Confirm Password"
-        android:background="@android:color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:padding="2dp"/>
+        android:maxLines="1"
+        android:singleLine="true"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@android:color/white"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:id="@+id/btnRegister"
@@ -68,6 +66,8 @@
         android:layout_height="wrap_content"
         android:onClick="registerUser"
         android:text="Register"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="50dp"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="@color/colorStatus"/>
 
 </LinearLayout>

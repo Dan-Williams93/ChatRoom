@@ -7,9 +7,13 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +35,9 @@ public class Login extends AppCompatActivity {
     private EditText etEmail, etPassword;
     private Button btnLogin;
     private TextView tvRegister;
+    private ProgressBar proLogin;
 
-    private String strEmail, strPassword, strResult, strUpdateUserID, strUpdateToken;
+    private String strEmail, strPassword, strResult, strUpdateUserID, strUpdateToken, strRegisteredEmail, strRegisteredPass;
     private ActiveUser auCurrentUser;
 
     private Bitmap bitDefaultProfileImage;
@@ -48,15 +53,29 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         strAuthenticationURL = getString(R.string.AuthenticationURL);
         strUpdateTokenURL = getString(R.string.UpdateTokenURL);
 
         etEmail = (EditText)findViewById(R.id.etEmail);
         etPassword = (EditText)findViewById(R.id.etPassword);
         btnLogin = (Button)findViewById(R.id.btnLogin);
+        proLogin = (ProgressBar)findViewById(R.id.proLogin);
+
         bitDefaultProfileImage = BitmapFactory.decodeResource(this.getResources(),R.drawable.anonymous);
 
         auCurrentUser = ActiveUser.getInstance();
+
+        Bundle intentBundle = getIntent().getExtras();
+
+        if (intentBundle != null) {
+            strRegisteredEmail = getIntent().getExtras().getString("username");
+            strRegisteredPass = getIntent().getExtras().getString("password");
+            etEmail.setText(strRegisteredEmail);
+            etPassword.setText(strRegisteredPass);
+        }
 
     }
 
@@ -68,6 +87,9 @@ public class Login extends AppCompatActivity {
         if (strEmail.equals("") || strPassword.equals(null)){
             Toast.makeText(this, "Please enter your credentials", Toast.LENGTH_LONG).show();
         }else{
+
+            proLogin.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.INVISIBLE);
 
             //GET TOKEN FROM SHARED PREFS
             SharedPreferences ChatPrefs = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
@@ -84,6 +106,8 @@ public class Login extends AppCompatActivity {
 
                                 if (strResult.equals("1")) {
 
+
+                                    //region RETRIEVE LOGIN DETAILS
                                     //GET USER DETAILS FROM RETURNED JSON AND STORE IN USER SINGLETON CLASS
                                     JSONArray jsonArray = jsonObject.getJSONArray("response");
 
@@ -130,12 +154,28 @@ public class Login extends AppCompatActivity {
 
                                         }
                                     }
+                                    //endregion
 
 
-                                    startActivity(new Intent(Login.this, ChatRoomGallery.class));
+                                    proLogin.setVisibility(View.INVISIBLE);
+                                    btnLogin.setText("Success");
+                                    btnLogin.setBackgroundResource(R.drawable.round_button_success);
+                                    btnLogin.setVisibility(View.VISIBLE);
+
+                                    Handler delayHandler = new Handler();
+                                    delayHandler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            startActivity(new Intent(Login.this, ChatRoomGallery.class));
+                                            finish();
+                                        }
+                                    },200);
+
                                 }
                                 else
                                     Toast.makeText(Login.this, "Unrecognisable User!", Toast.LENGTH_SHORT).show();
+                                    proLogin.setVisibility(View.INVISIBLE);
+                                    btnLogin.setVisibility(View.VISIBLE);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

@@ -10,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -45,12 +47,14 @@ public class PrivateMessages extends AppCompatActivity {
     private TextView tvNoChats;
     private ListView lvChatResults;
     private EditText etFindChat;
+    private ProgressBar progLoading;
 
     private ArrayList<String> arChatIDs = new ArrayList<String>();
     private ArrayList<String> arChatName = new ArrayList<String>();
     private ArrayList<String> arRecipientIDs = new ArrayList<String>();
     private ArrayList<String> arChatMessage = new ArrayList<String>();
     private ArrayList<Bitmap> arChatBitMap = new ArrayList<Bitmap>();
+    private ArrayList<String> arImageURLS = new ArrayList<String>();
 
     private Bitmap bitDefault;
 
@@ -67,12 +71,16 @@ public class PrivateMessages extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private_messages);
 
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         strGetDetailsURL = getString(R.string.GetPrivateChatDetailsURL);
         strSearchDetailsURL = getString(R.string.SearchPrivateChatDetailsURL);
 
         tvNoChats = (TextView)findViewById(R.id.tvNoChats);
         etFindChat = (EditText)findViewById(R.id.etFindChat);
         lvChatResults = (ListView)findViewById(R.id.lvChatResults);
+        progLoading = (ProgressBar)findViewById(R.id.progLoading);
 
         auCurrentUser = ActiveUser.getInstance();
 
@@ -94,7 +102,7 @@ public class PrivateMessages extends AppCompatActivity {
                     arChatName.clear();
                     arChatMessage.clear();
                     arChatBitMap.clear();
-                    //SEARCH
+                    lvChatResults.setAdapter(null);
                     SearchChatDetails();
                 }else if (s.toString().trim().length() == 0) {
                   //clear all and run getchat
@@ -102,6 +110,7 @@ public class PrivateMessages extends AppCompatActivity {
                     arChatName.clear();
                     arChatMessage.clear();
                     arChatBitMap.clear();
+                    tvNoChats.setVisibility(View.INVISIBLE);
                     GetChatDetails();
                 }
             }
@@ -119,25 +128,21 @@ public class PrivateMessages extends AppCompatActivity {
 
                 String strSelectedChatID = arChatIDs.get(position);
                 String strSelectedChatName = arChatName.get(position);
-
-                //ADDED
                 String strSellectedRecipientID = arRecipientIDs.get(position);
-                //ADDED
-
                 Bitmap bitSelectedChatImage = arChatBitMap.get(position);
+                String strSelectedImageURL = arImageURLS.get(position);
 
                 Intent chatIntent = new Intent(PrivateMessages.this, ChatRoom.class);
                 chatIntent.putExtra("Chat_ID", strSelectedChatID);
                 chatIntent.putExtra("Chat_Name", strSelectedChatName);
-
-                //ADDED
                 chatIntent.putExtra("recipient_id", strSellectedRecipientID);
-                //ADDED
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitSelectedChatImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
                 chatIntent.putExtra("Chat_Image", byteArray);
+
+                chatIntent.putExtra("imageURL", strSelectedImageURL);
 
 
                 startActivity(chatIntent);
@@ -148,10 +153,14 @@ public class PrivateMessages extends AppCompatActivity {
 
     private void GetChatDetails(){
 
+        progLoading.setVisibility(View.VISIBLE);
+
         StringRequest getDetailsRequest = new StringRequest(Request.Method.POST, strGetDetailsURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+                        progLoading.setVisibility(View.INVISIBLE);
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -162,22 +171,14 @@ public class PrivateMessages extends AppCompatActivity {
 
                                 JSONArray jsonIDSArray = null;
                                 JSONArray jsonNamesArray = null;
-
-                                //ADDED
                                 JSONArray jsonRecipientIDArray = null;
-                                //ADDED
-
                                 JSONArray jsonMessagesArray = null;
                                 JSONArray jsonURLArray = null;
 
                                 try {
                                     jsonIDSArray = jsonObject.getJSONArray("chat_ids");
                                     jsonNamesArray = jsonObject.getJSONArray("chat_names");
-
-                                    //ADDED
                                     jsonRecipientIDArray = jsonObject.getJSONArray("recipient_id");
-                                    //ADDED
-
                                     jsonMessagesArray = jsonObject.getJSONArray("chat_messages");
                                     jsonURLArray = jsonObject.getJSONArray("chat_images");
                                 } catch (JSONException e) {
@@ -224,6 +225,9 @@ public class PrivateMessages extends AppCompatActivity {
 
                                         try {
                                             mMessage = jsonMessagesArray.get(i).toString();
+                                            if (mMessage.equals(null)){
+                                                mMessage = " ";
+                                            }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                             mMessage = " ";
@@ -239,6 +243,8 @@ public class PrivateMessages extends AppCompatActivity {
 
                                     for (int i = 0; i < jsonURLArray.length(); i++) {
                                         String strURL = jsonURLArray.get(i).toString();
+
+                                        arImageURLS.add(strURL);
 
                                         if (strURL.equals("not specified")){
                                             arChatBitMap.add(bitDefault);
@@ -297,10 +303,14 @@ public class PrivateMessages extends AppCompatActivity {
 
     private void SearchChatDetails(){
 
+        progLoading.setVisibility(View.VISIBLE);
+
         StringRequest getDetailsRequest = new StringRequest(Request.Method.POST, strSearchDetailsURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+                        progLoading.setVisibility(View.INVISIBLE);
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -308,6 +318,8 @@ public class PrivateMessages extends AppCompatActivity {
                             String strResult = jsonObject.getString("result");
 
                             if (strResult.equals("1")){
+
+                                tvNoChats.setVisibility(View.INVISIBLE);
 
                                 JSONArray jsonIDSArray = null;
                                 JSONArray jsonNamesArray = null;
@@ -406,6 +418,10 @@ public class PrivateMessages extends AppCompatActivity {
         };
 
         VolleyQueueSingleton.getmInstance(PrivateMessages.this).addToRequestQueue(getDetailsRequest);
+    }
+
+    public void goHome(View view){
+        startActivity(new Intent(this, ChatRoomGallery.class));
     }
 
 }

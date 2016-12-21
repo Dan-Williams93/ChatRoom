@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ import java.util.Map;
 public class Profile extends AppCompatActivity {
 
     private String strUserName, strUserID, strEmail, strUserBio, strActiveUserID, strChatId, strChatName, strNewChatID;
-    private String strChatCheckURL, strCreateChatURL;
+    private String strChatCheckURL, strCreateChatURL, strSendMessageURL;
     private Bitmap bitProfileImage;
 
     private ImageView imgProfileImage;
@@ -38,6 +39,9 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         strActiveUserID = auActiveUser.getUserID();
         strChatCheckURL = getString(R.string.ChatCheckURL);
@@ -145,7 +149,8 @@ public class Profile extends AppCompatActivity {
 
                             if (strResult.equals("1")){
                                 strNewChatID = jsonObject.getString("chat_id");
-                                startNewChat();
+                                //startNewChat();
+                                insertMessage();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -170,6 +175,51 @@ public class Profile extends AppCompatActivity {
         };
 
         VolleyQueueSingleton.getmInstance(Profile.this).addToRequestQueue(newChatRequest);
+    }
+
+    public void insertMessage(){
+
+        strSendMessageURL = getString(R.string.SendMessageURL);
+
+        StringRequest insertRequest = new StringRequest(Request.Method.POST, strSendMessageURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String strResult = jsonObject.getString("result");
+
+                            if (strResult.equals("1")){
+                                startNewChat();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("chat_id", strNewChatID);
+                params.put("user_id", strActiveUserID);
+                params.put("username", auActiveUser.getName());
+                params.put("message", " ");
+                params.put("timestamp", " ");
+
+                return params;
+            }
+        };
+
+        VolleyQueueSingleton.getmInstance(Profile.this).addToRequestQueue(insertRequest);
     }
 
     public void startNewChat(){

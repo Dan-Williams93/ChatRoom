@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class ChatRoomGallery extends AppCompatActivity {
@@ -15,6 +16,8 @@ public class ChatRoomGallery extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room_gallery);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         tvTest = (TextView)findViewById(R.id.tvTest);
 
@@ -39,5 +42,10 @@ public class ChatRoomGallery extends AppCompatActivity {
 
     public void goToMessages(View view){
         startActivity(new Intent(this, PrivateMessages.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

@@ -13,15 +13,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
@@ -29,6 +33,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +48,8 @@ public class ChatRoom extends AppCompatActivity {
     private TextView tvChatName;
     private EditText etMessage;
     private Button btnSend;
+    private ProgressBar progLoading;
+
     private RecyclerView recMessages;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
@@ -49,10 +57,11 @@ public class ChatRoom extends AppCompatActivity {
 
     private ActiveUser auActiveUser;
 
-    private String strActiveUserID, strActiveUserName, strChatID, strRecipientID, strChatName, strNewMessage, strDateTime;
-    private String strFetchMessageURL, strSendNotificationURL, strSendMessageURL;
+    private String strActiveUserID, strActiveUserName, strChatID, strRecipientID, strChatName, strNewMessage, strDateTime, strImageURL;
+    private String strFetchMessageURL, strSendNotificationURL, strSendMessageURL, strGetProfileImageURL;
     private Bitmap bitChatImage;
     private ArrayList<Message> arMessages = new ArrayList<Message>();
+    private byte[] byteArray;
 
     private BroadcastReceiver mNotificationBroadcastReciever;
     //endregion
@@ -62,16 +71,20 @@ public class ChatRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         strFetchMessageURL = getString(R.string.FetchMessagesURL);
         strSendNotificationURL = getString(R.string.SendNotificationURL);
         strSendMessageURL = getString(R.string.SendMessageURL);
+        strGetProfileImageURL = getString(R.string.GetProfileImageURL);
 
-        imChatImage = (ImageView)findViewById(R.id.imChatImage);
-        tvChatName = (TextView)findViewById(R.id.tvChatName);
-        etMessage = (EditText)findViewById(R.id.etMessage);
-        btnSend = (Button)findViewById(R.id.btnSend);
+        imChatImage = (ImageView) findViewById(R.id.imChatImage);
+        tvChatName = (TextView) findViewById(R.id.tvChatName);
+        etMessage = (EditText) findViewById(R.id.etMessage);
+        btnSend = (Button) findViewById(R.id.btnSend);
+        progLoading = (ProgressBar)findViewById(R.id.progLoading);
 
-        recMessages = (RecyclerView)findViewById(R.id.recMessages);
+        recMessages = (RecyclerView) findViewById(R.id.recMessages);
         recMessages.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recMessages.setLayoutManager(layoutManager);
@@ -83,11 +96,24 @@ public class ChatRoom extends AppCompatActivity {
         strChatID = getIntent().getExtras().getString("Chat_ID");
         strChatName = getIntent().getExtras().getString("Chat_Name");
         strRecipientID = getIntent().getExtras().getString("recipient_id");
+        strImageURL = getIntent().getExtras().getString("imageURL");
 
-        byte[] byteArray = getIntent().getByteArrayExtra("Chat_Image");
-        bitChatImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
-        tvChatName.setText(strChatID + " " + strChatName);
+        //region GET IMAGE FROM PRIVATE MESSAGE ACTIVITY
+        try {
+            byteArray = getIntent().getByteArrayExtra("Chat_Image");
+            bitChatImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            imChatImage.setImageBitmap(bitChatImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            bitChatImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.anonymous);
+            getImageURL(strRecipientID);
+        }
+        //endregion
+
+        //getImageURL(strRecipientID);
+
+        tvChatName.setText(/*strChatID + " " +*/ strChatName);
         imChatImage.setImageBitmap(bitChatImage);
 
         fetchMessages();
@@ -96,13 +122,13 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                if (intent.getAction().equals("pushnotification")){
+                if (intent.getAction().equals("pushnotification")) {
 
                     String strID = intent.getStringExtra("id");
 
-                    if (strID.equals(strChatID)){
+                    if (strID.equals(strChatID)) {
                         //arMessages.clear();
-                        //fetchMessages();
+                            //fetchMessages();
                         String message = intent.getStringExtra("message");
                         String name = intent.getStringExtra("name");
                         processNewMesage(message, name);
@@ -110,6 +136,83 @@ public class ChatRoom extends AppCompatActivity {
                 }
             }
         };
+    }
+
+
+    public void getImageURL(final String strID){
+
+        StringRequest imageURLRequest = new StringRequest(Request.Method.POST, strGetProfileImageURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            String strResult = jsonObject.getString("result");
+
+                            if (strResult.equals("1")){
+
+                                JSONArray jsonArray = jsonObject.getJSONArray("response");
+
+                                for (int i = 0; i < jsonArray.length(); i++){
+                                    JSONObject jsonMessage = jsonArray.getJSONObject(i);
+
+                                    try {
+                                        strImageURL = jsonMessage.getString("profile_image_url");
+                                        getImage();
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        bitChatImage = BitmapFactory.decodeResource(ChatRoom.this.getResources(), R.drawable.anonymous);
+                                        imChatImage.setImageBitmap(bitChatImage);
+                                    }
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", strID);
+                return params;
+            }
+        };
+        VolleyQueueSingleton.getmInstance(ChatRoom.this).addToRequestQueue(imageURLRequest);
+    }
+
+    public void getImage(){
+
+        if (!strImageURL.equals("not specified")) {
+            ImageRequest request = new ImageRequest(strImageURL,
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap bitmap) {
+                            bitChatImage = bitmap;
+                            imChatImage.setImageBitmap(bitChatImage);
+                        }
+                    }, 0, 0, null,
+                    new Response.ErrorListener() {
+                        public void onErrorResponse(VolleyError error) {
+                            bitChatImage = BitmapFactory.decodeResource(ChatRoom.this.getResources(), R.drawable.anonymous);
+                            imChatImage.setImageBitmap(bitChatImage);
+                        }
+                    });
+            // Access the RequestQueue through your singleton class.
+            VolleyQueueSingleton.getmInstance(ChatRoom.this).addToRequestQueue(request);
+        }else {
+            bitChatImage = BitmapFactory.decodeResource(ChatRoom.this.getResources(), R.drawable.anonymous);
+            imChatImage.setImageBitmap(bitChatImage);
+        }
     }
 
     public void processNewMesage(String message, String name){
@@ -121,11 +224,14 @@ public class ChatRoom extends AppCompatActivity {
 
     public void fetchMessages(){
         //fetch messages from database using
+        progLoading.setVisibility(View.VISIBLE);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, strFetchMessageURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+                        progLoading.setVisibility(View.INVISIBLE);
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -142,9 +248,15 @@ public class ChatRoom extends AppCompatActivity {
                                     String strMessage = jsonMessage.getString("message");
                                     String strTimeStamp = jsonMessage.getString("time_stamp");
 
-                                    Message newMessage = new Message(strUserID, strMessage, strTimeStamp, strUsername);
+                                    //added if
 
-                                    arMessages.add(newMessage);
+                                    if (!strMessage.equals(" ")) {
+                                        Message newMessage = new Message(strUserID, strMessage, strTimeStamp, strUsername);
+                                        arMessages.add(newMessage);
+
+                                    }
+
+                                //    arMessages.add(newMessage);
                                 }
                             }
 
@@ -188,6 +300,7 @@ public class ChatRoom extends AppCompatActivity {
 
         if (!strNewMessage.equals("")){
 
+            //strNewMessage = strNewMessage.replaceAll("'", "/'");
             Message m = new Message(strActiveUserID, strNewMessage, strDateTime, strActiveUserName);
 
             //send the message to database
@@ -221,7 +334,7 @@ public class ChatRoom extends AppCompatActivity {
                                     adapter = new ChatThreadAdapter(ChatRoom.this, arMessages, strActiveUserID);
                                     recMessages.setAdapter(adapter);
                                 }
-                                
+
                                 etMessage.setText("");
 
                             }
@@ -275,6 +388,8 @@ public class ChatRoom extends AppCompatActivity {
                 params.put("chat_name", auActiveUser.getName()); ///changed from strChatName
                 params.put("user_ids", strRecipientID);
                 params.put("chat_id", strChatID);
+
+                params.put("active_id", strActiveUserID);
                 return params;
             }
         };
@@ -296,7 +411,6 @@ public class ChatRoom extends AppCompatActivity {
                 new IntentFilter("pushnotification"));
     }
 
-
     //Unregistering receivers
     @Override
     protected void onPause() {
@@ -304,4 +418,5 @@ public class ChatRoom extends AppCompatActivity {
         Log.w("MainActivity", "onPause");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mNotificationBroadcastReciever);
     }
+
 }

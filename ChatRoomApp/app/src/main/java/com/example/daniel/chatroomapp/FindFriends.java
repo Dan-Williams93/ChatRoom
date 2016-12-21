@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -32,7 +36,9 @@ public class FindFriends extends AppCompatActivity {
 
     private EditText etSearchFriends;
     private ListView lvResults;
-    //private static final String strSearchFriendsURL = "http://80.0.165.187/chatroomapp/search_friend.php";
+    private TextView tvNoFriends;
+    private ProgressBar progLoading;
+
     private String strSearchFriendsURL;
 
     private ArrayList<String> arFriendsNames = new ArrayList<String>();
@@ -47,17 +53,25 @@ public class FindFriends extends AppCompatActivity {
     private String strProfileImageUrL;
     private String strSearchCredential;
 
+    private ActiveUser auCurrentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_friends);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         strSearchFriendsURL = getString(R.string.SearchFriendsURL);
+
+        auCurrentUser = ActiveUser.getInstance();
 
         bitDefaultProfileImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.anonymous);
 
         etSearchFriends = (EditText)findViewById(R.id.etSearchFriends);
         lvResults = (ListView)findViewById(R.id.lvResults);
+        tvNoFriends = (TextView)findViewById(R.id.tvNoFriends);
+        progLoading = (ProgressBar)findViewById(R.id.progLoading);
 
         etSearchFriends.addTextChangedListener(new TextWatcher() {
             @Override
@@ -71,13 +85,15 @@ public class FindFriends extends AppCompatActivity {
                     arFriendsNames.clear();
                     arFriendsUserID.clear();;
                     arFriendsEmail.clear();
+                    lvResults.setAdapter(null);
                     strSearchCredential = etSearchFriends.getText().toString();
                     SearchFriends(strSearchCredential);
                 }else if (s.toString().trim().length() == 0) {
                     arFriendsNames.clear();
                     arFriendsUserID.clear();
                     arFriendsEmail.clear();
-                    lvResults.setAdapter(null);
+                    //lvResults.setAdapter(null);
+                    SearchFriends("");
                 }
             }
 
@@ -120,6 +136,10 @@ public class FindFriends extends AppCompatActivity {
 
     private void SearchFriends(final String strSearchCredential) {
 
+        //strSearchCredential = etSearchFriends.getText().toString();
+
+        progLoading.setVisibility(View.VISIBLE);
+
         StringRequest searchFriendsRequest = new StringRequest(Request.Method.POST, strSearchFriendsURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -129,6 +149,10 @@ public class FindFriends extends AppCompatActivity {
                     String result = jsonObject.getString("status");
 
                     if (result.equals("1")){
+
+                        progLoading.setVisibility(View.INVISIBLE);
+                        tvNoFriends.setVisibility(View.INVISIBLE);
+
                         JSONArray JsonArray = jsonObject.getJSONArray("result");
 
                         for(int i = 0; i < JsonArray.length(); i++){
@@ -153,13 +177,11 @@ public class FindFriends extends AppCompatActivity {
                             }
 
                         }
-
-                        //CHANGE FOR CUSTOM ADAPTER
-                        //ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(FindFriends.this, android.R.layout.simple_list_item_1, arFriendsNames);
-                        //lvResults.setAdapter(itemsAdapter);
-
                         FriendsArrayAdapter custom_listView_adapter = new FriendsArrayAdapter(FindFriends.this, arFriendsNames, arFriendProfileImage);
                         lvResults.setAdapter(custom_listView_adapter);
+                    }else {
+                        progLoading.setVisibility(View.INVISIBLE);
+                        tvNoFriends.setVisibility(View.VISIBLE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -177,11 +199,16 @@ public class FindFriends extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("search_credential", strSearchCredential);
+                params.put("user_id", auCurrentUser.getUserID());
 
                 return params;
             }
         };
 
         VolleyQueueSingleton.getmInstance(FindFriends.this).addToRequestQueue(searchFriendsRequest);
+    }
+
+    public void goHome(View view){
+        startActivity(new Intent(FindFriends.this, ChatRoomGallery.class));
     }
 }
