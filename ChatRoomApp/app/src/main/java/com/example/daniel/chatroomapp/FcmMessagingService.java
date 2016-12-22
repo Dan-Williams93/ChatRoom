@@ -45,39 +45,60 @@ public class FcmMessagingService extends FirebaseMessagingService {
         if (title == null || title.equals(null)){
             title = remoteMessage.getNotification().getTitle();
             messgae = remoteMessage.getNotification().getBody();
+
+            Intent intent = new Intent(this, ChatRoomGallery.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent , PendingIntent.FLAG_ONE_SHOT);
+
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+
+            notificationBuilder.setContentTitle(title);
+            notificationBuilder.setContentText(messgae);
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+            notificationBuilder.setAutoCancel(true);
+            notificationBuilder.setLights(Color.CYAN, 500, 500);
+            notificationBuilder.setVibrate(new long[]{0,500,500,500,500});
+            notificationBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+            notificationBuilder.setContentIntent(pendingIntent);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notificationBuilder.build());
+
+            sendNotification(title, messgae, id);
+        }else{
+            //region MESSAGE NOTIFICATION
+            Intent intent = new Intent(this, ChatRoom.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            intent.putExtra("Chat_ID", id);
+            intent.putExtra("Chat_Name", title);
+            intent.putExtra("recipient_id", user_id);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent , PendingIntent.FLAG_ONE_SHOT);
+
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+
+            notificationBuilder.setContentTitle(title);
+            notificationBuilder.setContentText(messgae);
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+            notificationBuilder.setAutoCancel(true);
+            notificationBuilder.setLights(Color.CYAN, 500, 500);
+            notificationBuilder.setVibrate(new long[]{0,500,500,500,500});
+            notificationBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+            notificationBuilder.setContentIntent(pendingIntent);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notificationBuilder.build());
+
+            sendNotification(title, messgae, id);
+            //endregion
         }
 
 
         //Intent intent = new Intent(this, Splash.class);
 
-        Intent intent = new Intent(this, ChatRoom.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        //added
-        intent.putExtra("Chat_ID", id);
-        intent.putExtra("Chat_Name", title);
-        intent.putExtra("recipient_id", user_id);
-        //added
-
-
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent , PendingIntent.FLAG_ONE_SHOT);
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-
-        notificationBuilder.setContentTitle(title);
-        notificationBuilder.setContentText(messgae);
-        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
-        notificationBuilder.setAutoCancel(true);
-        notificationBuilder.setLights(Color.CYAN, 500, 500);
-        notificationBuilder.setVibrate(new long[]{0,500,500,500,500});
-        notificationBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-        notificationBuilder.setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notificationBuilder.build());
-
-        sendNotification(title, messgae, id);
     }
 
     private void sendNotification(String title, String message, String id){

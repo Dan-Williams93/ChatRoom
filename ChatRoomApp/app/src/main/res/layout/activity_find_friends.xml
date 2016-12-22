@@ -31,7 +31,7 @@
             android:layout_marginLeft="35dp"
             android:text="Friends"
             android:textColor="@android:color/white"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold"/>
 
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,8 +23,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -51,7 +54,8 @@ public class ChatRoom extends AppCompatActivity {
     private ProgressBar progLoading;
 
     private RecyclerView recMessages;
-    private RecyclerView.LayoutManager layoutManager;
+    //private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
 
 
@@ -87,6 +91,8 @@ public class ChatRoom extends AppCompatActivity {
         recMessages = (RecyclerView) findViewById(R.id.recMessages);
         recMessages.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
+        //layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recMessages.setLayoutManager(layoutManager);
 
 
@@ -294,6 +300,15 @@ public class ChatRoom extends AppCompatActivity {
     }
 
     public void sendMessage(View view){
+        btnSend.setEnabled(false);
+        Handler btnEnableEvent = new Handler();
+        btnEnableEvent.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               btnSend.setEnabled(true);
+            }
+        },500);
+
         strNewMessage = etMessage.getText().toString().trim();
         strActiveUserName = auActiveUser.getName();
         strDateTime = getTimeStamp();
@@ -362,6 +377,13 @@ public class ChatRoom extends AppCompatActivity {
             }
         };
 
+        //Disabling retry to prevent duplicate messages
+        int socketTimeout = 0;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
+        uploadMessageRequest.setRetryPolicy(policy);
         VolleyQueueSingleton.getmInstance(ChatRoom.this).addToRequestQueue(uploadMessageRequest);
     }
 
@@ -417,6 +439,11 @@ public class ChatRoom extends AppCompatActivity {
         super.onPause();
         Log.w("MainActivity", "onPause");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mNotificationBroadcastReciever);
+    }
+
+    public void goBack(View view){
+        startActivity(new Intent(this, PrivateMessages.class));
+        finish();
     }
 
 }

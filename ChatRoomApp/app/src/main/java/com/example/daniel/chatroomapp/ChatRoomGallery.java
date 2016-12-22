@@ -23,11 +23,12 @@ public class ChatRoomGallery extends AppCompatActivity {
 
         auCurrentUser = ActiveUser.getInstance();
 
-        tvTest.setText("isLogged: " + auCurrentUser.getIsLoggedIn().toString() + "\n" +
-                        "User ID: " + auCurrentUser.getUserID().toString() + "\n" +
-                        "Name: " + auCurrentUser.getName().toString() + "\n" +
-                        "Email: " + auCurrentUser.getEmail().toString() + "\n" +
-                        "Token: " + auCurrentUser.getUsersFCMToken().toString());
+//        tvTest.setText("isLogged: " + auCurrentUser.getIsLoggedIn().toString() + "\n" +
+//                        "User ID: " + auCurrentUser.getUserID().toString() + "\n" +
+//                        "Name: " + auCurrentUser.getName().toString() + "\n" +
+//                        "Email: " + auCurrentUser.getEmail().toString() + "\n" +
+//                        "Token: " + auCurrentUser.getUsersFCMToken().toString());
+        tvTest.setText("Coming Soon!");
 
     }
 
