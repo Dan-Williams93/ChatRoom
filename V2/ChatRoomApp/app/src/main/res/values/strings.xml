@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">RoomChat</string>
+
+
+    <!--SHARED PREFERENCES -->
+    <string name="PREFS_NAME">ChatRoomAppPreferences</string>
+    <string name="FCM_TOKEN_PREF">USERS_FCM_Token</string>
+
+    <string name="isLogged">isLogged</string>
+    <string name="UserID">UserID</string>
+    <string name="UserEmail">UserEmail</string>
+    <string name="UserName">Name</string>
+    <string name="ActiveUserToken">ActiveUserToken</string>
+    <string name="UserBio">UserBio</string>
+    <string name="profileImageURL">userProfileImageURL</string>
+
+
+    <!-- SECURITY QUESTIONS-->
+    <string-array name="security_questions">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+        <item>Select A Question...</item>
+    </string-array>
+
+
+    <!--URL'S-->
+    <!--HOME-->
+    <!--<string name="UpdateTokenURL">http://80.0.165.187/chatroomapp/update_token.php</string>-->
+    <!--<string name="RegisterUserURL">http://80.0.165.187/chatroomapp/register_user.php</string>-->
+    <!--<string name="GetPrivateChatDetailsURL">http://80.0.165.187/chatroomapp/getpcdetails.php</string>-->
+    <!--<string name="SearchPrivateChatDetailsURL">http://80.0.165.187/chatroomapp/search_pc.php</string>-->
+    <!--<string name="AuthenticationURL">http://80.0.165.187/chatroomapp/authenticate_user.php</string>-->
+    <!--<string name="SearchFriendsURL">http://80.0.165.187/chatroomapp/search_friend.php</string>-->
+    <!--<string name="FetchMessagesURL">http://80.0.165.187/chatroomapp/fetch_private_messages.php</string>-->
+
+
+    <!--<string name="ValidateEmailURL">http://82.20.226.191/chatroomapp/validate_email.php</string>-->
+    <!--<string name="GetProfileImageURL">http://82.20.226.191/chatroomapp/getuserdetails.php</string>-->
+    <!--<string name="SecurityRequestURL">http://82.17.251.148/chatroomapp/security_request.php</string>-->
+    <!--HOME-->
+
+
+    <!--STEVES-->
+    <string name="UpdateTokenURL">http://82.17.251.148/chatroomapp/update_token.php</string>
+    <string name="RegisterUserURL">http://82.17.251.148/chatroomapp/register_user.php</string>
+    <string name="GetPrivateChatDetailsURL">http://82.17.251.148/chatroomapp/getpcdetails.php</string>
+    <string name="SearchPrivateChatDetailsURL">http://82.17.251.148/chatroomapp/search_pc.php</string>
+    <string name="AuthenticationURL">http://82.17.251.148/chatroomapp/authenticate_user.php</string>
+    <string name="SearchFriendsURL">http://82.17.251.148/chatroomapp/search_friend.php</string>
+    <string name="FetchMessagesURL">http://82.17.251.148/chatroomapp/fetch_private_messages.php</string>
+    <string name="SendNotificationURL">http://82.17.251.148/chatroomapp/send_notification.php</string>
+    <string name="SendMessageURL">http://82.17.251.148/chatroomapp/send_message.php</string>
+    <string name="ChatCheckURL">http://82.17.251.148/chatroomapp/check_private_chat.php</string>
+    <string name="CreateChatURL">http://82.17.251.148/chatroomapp/create_pc.php</string>
+
+    <string name="ValidateEmailURL">http://82.17.251.148/chatroomapp/validate_email.php</string>
+    <string name="GetProfileImageURL">http://82.17.251.148/chatroomapp/getuserdetails.php</string>
+    <string name="SecurityRequestURL">http://82.17.251.148/chatroomapp/security_request.php</string>
+    <!--82.17.251.148-->
+
+
+    <!--Tricia-->
+    <!--<string name="UpdateTokenURL">http://82.20.226.191/chatroomapp/update_token.php</string>-->
+    <!--<string name="RegisterUserURL">http://82.20.226.191/chatroomapp/register_user.php</string>-->
+    <!--<string name="GetPrivateChatDetailsURL">http://82.20.226.191/chatroomapp/getpcdetails.php</string>-->
+    <!--<string name="SearchPrivateChatDetailsURL">http://82.20.226.191/chatroomapp/search_pc.php</string>-->
+    <!--<string name="AuthenticationURL">http://82.20.226.191/chatroomapp/authenticate_user.php</string>-->
+    <!--<string name="SearchFriendsURL">http://82.20.226.191/chatroomapp/search_friend.php</string>-->
+    <!--<string name="FetchMessagesURL">http://82.20.226.191/chatroomapp/fetch_private_messages.php</string>-->
+    <!--<string name="SendNotificationURL">http://82.20.226.191/chatroomapp/send_notification.php</string>-->
+    <!--<string name="SendMessageURL">http://82.20.226.191/chatroomapp/send_message.php</string>-->
+    <!--<string name="ChatCheckURL">http://82.20.226.191/chatroomapp/check_private_chat.php</string>-->
+    <!--<string name="CreateChatURL">http://82.20.226.191/chatroomapp/create_pc.php</string>-->
+    <!--<string name="ValidateEmailURL">http://82.20.226.191/chatroomapp/validate_email.php</string>-->
+    <!--<string name="GetProfileImageURL">http://82.20.226.191/chatroomapp/getuserdetails.php</string>-->
+
+    <!--<string name="SecurityRequestURL">http://82.17.251.148/chatroomapp/security_request.php</string>-->
+    <!--82.20.226.191-->
+
+
+</resources>

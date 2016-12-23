@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.daniel.chatroomapp.MyProfile"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/roomchatapp_logo"
+                android:id="@+id/imgProfilePic" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:visibility="invisible"
+                android:id="@+id/imbtEditProfilePic"
+                android:onClick="ChangeProfilePic"
+                android:src="@android:drawable/ic_menu_edit"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/custom_border">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NAME\nDani Williams"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:enabled="false"
+                android:inputType="none"
+                android:id="@+id/etName" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/custom_border">
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="BIO - Not Set"
+                    android:layout_centerVertical="true"
+                    android:enabled="false"
+                    android:inputType="none"
+                    android:id="@+id/etBio" />
+
+        </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ActiveChats"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ActiveGroups"/>
+
+            <Button
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/btnEdit"
+                android:onClick="revealEditOptions" />
+
+            <Button
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="Sign Out"
+                android:drawableLeft="@drawable/ic_action_halt"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/btnSignOut"
+                android:onClick="SignOutUser" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

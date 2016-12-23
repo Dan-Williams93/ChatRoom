@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_chat_room_gallery"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="com.example.daniel.chatroomapp.ChatRoomGallery"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:padding="0dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight=".33"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="#ad00d7"
+            android:text="FRIENDS"
+            android:onClick="searchFriends"
+            android:elevation="24dp" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight=".33"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="#ad00d7"
+            android:text="MESSAGES"
+            android:elevation="24dp"
+            android:onClick="goToMessages" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight=".33"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="#ad00d7"
+            android:text="PROFILE"
+            android:elevation="24dp"
+            android:onClick="viewMyProfile" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="0dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight=".33"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="#ad00d7"
+            android:text="JOIN ROOMS"
+            android:elevation="24dp" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight=".33"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="#ad00d7"
+            android:text="HOME"
+            android:elevation="24dp" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight=".33"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="#ad00d7"
+            android:text="CREATE ROOM"
+            android:elevation="24dp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ROOMCHAT\n\nCOMING SOON!"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textSize="30sp"/>
+
+</RelativeLayout>
