@@ -18,7 +18,7 @@
         android:src="@drawable/roomchaticon"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="40dp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/progLoading"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="80dp"/>
 
     <TextView
         android:id="@+id/tvMessage"

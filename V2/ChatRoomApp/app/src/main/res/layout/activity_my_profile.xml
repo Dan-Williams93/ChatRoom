@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_my_profile"
     android:layout_width="match_parent"
@@ -9,7 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.daniel.chatroomapp.MyProfile"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/roomchatgradient">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,67 +22,150 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:gravity="center"
-            android:layout_gravity="center">
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:layout_gravity="center">
 
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:src="@drawable/roomchatapp_logo"
-                android:id="@+id/imgProfilePic" />
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/roomchatapp_logo"
+                    android:id="@+id/imgProfilePic" />
 
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:visibility="invisible"
-                android:id="@+id/imbtEditProfilePic"
-                android:onClick="ChangeProfilePic"
-                android:src="@android:drawable/ic_menu_edit"/>
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:visibility="invisible"
+                    android:id="@+id/imbtEditProfilePic"
+                    android:onClick="ChangeProfilePic"
+                    android:src="@android:drawable/ic_menu_edit"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/custom_border">
-
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NAME\nDani Williams"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:enabled="false"
-                android:inputType="none"
-                android:id="@+id/etName" />
+                android:orientation="vertical"
+                android:background="@drawable/custom_border">
 
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/custom_border">
-
-            <EditText
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="BIO - Not Set"
+                    android:text="NAME\nDani Williams"
+                    android:gravity="center"
                     android:layout_centerVertical="true"
                     android:enabled="false"
                     android:inputType="none"
-                    android:id="@+id/etBio" />
+                    android:id="@+id/etName" />
 
-        </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/custom_border">
+
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="BIO - Not Set"
+                        android:layout_centerVertical="true"
+                        android:enabled="false"
+                        android:inputType="none"
+                        android:id="@+id/etBio" />
+
+            </LinearLayout>
+
+            <!-- CHANGE PASSWORD -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_border">
+
+                <TextView
+                    android:id="@+id/tvChangePass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Password"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <ImageButton
+                    android:id="@+id/imbtnPasswordDrop"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_expand_more_white"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:onClick="showPasswordOptions"
+                    android:backgroundTint="@color/colorStatus"
+                    android:background="@drawable/rounded_button"/>
+
+                <EditText
+                    android:id="@+id/etOldPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvChangePass"
+                    android:hint="Old Password"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="@android:color/white"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/etNewPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/etOldPassword"
+                    android:hint="New Password"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="@android:color/white"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/etNewPasswordConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/etNewPassword"
+                    android:hint="Confirm New Password"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="@android:color/white"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btnChangePass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etNewPasswordConfirm"
+                    android:onClick="changePassword"
+                    android:text="Change"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@color/colorStatus"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+            <!-- END CHANGE PASSWORD -->
 
 
             <TextView

@@ -11,17 +11,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import static android.R.drawable.ic_menu_edit;
 import static android.R.drawable.ic_menu_save;
 
 public class MyProfile extends AppCompatActivity {
 
+
+    //region CHANGE PASSWORD VIEWS
+    private TextView tvChangePass;
+    private ImageButton imbtnPasswordDrop;
+    private EditText etOldPassword, etNewPassword, etNewPasswordConfirm;
+    private Button btnChangePass;
+    //endregion
+
     private ImageView imgProfilePic;
-    private ImageButton imbtEditProfilePic;
     private EditText etName, etBio;
     private Button btnEdit;
-
+    private ImageButton imbtEditProfilePic;
     private String strBio;
     private String strName;
     private String strUserID;
@@ -38,10 +46,23 @@ public class MyProfile extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+
+        //region CHANGE PASSWORD VIEW CASTING
+        tvChangePass = (TextView)findViewById(R.id.tvChangePass);
+        imbtnPasswordDrop = (ImageButton)findViewById(R.id.imbtnPasswordDrop);
+        etOldPassword = (EditText)findViewById(R.id.etOldPassword);
+        etNewPassword = (EditText)findViewById(R.id.etNewPassword);
+        etNewPasswordConfirm = (EditText)findViewById(R.id.etNewPasswordConfirm);
+        btnChangePass = (Button)findViewById(R.id.btnChangePass);
+        //endregion
+
+
+
         imgProfilePic = (ImageView)findViewById(R.id.imgProfilePic);
         imbtEditProfilePic = (ImageButton)findViewById(R.id.imbtEditProfilePic);
         etName = (EditText)findViewById(R.id.etName);
         etBio = (EditText)findViewById(R.id.etBio);
+
 
         btnEdit = (Button)findViewById(R.id.btnEdit);
         btnEdit.setTag(1);
@@ -116,6 +137,26 @@ public class MyProfile extends AppCompatActivity {
         finish();
 
 
+    }
+
+    public void showPasswordOptions(View view){
+
+        if (etOldPassword.getVisibility() != view.VISIBLE) {
+            etOldPassword.setVisibility(View.VISIBLE);
+            etNewPassword.setVisibility(View.VISIBLE);
+            etNewPasswordConfirm.setVisibility(View.VISIBLE);
+            btnChangePass.setVisibility(View.VISIBLE);
+        }
+        else {
+            etOldPassword.setVisibility(View.GONE);
+            etNewPassword.setVisibility(View.GONE);
+            etNewPasswordConfirm.setVisibility(View.GONE);
+            btnChangePass.setVisibility(View.GONE);
+        }
+
+    }
+
+    public void changePassword(View view) {
     }
 }
 

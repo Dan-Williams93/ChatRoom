@@ -110,7 +110,8 @@ public class ChatRoom extends AppCompatActivity {
         if (strActiveUserID.equals("")){
             SharedPreferences MyPrefs = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
             //isLoggedIn
-            auActiveUser.setIsLoggedIn(MyPrefs.getBoolean(getString(R.string.isLogged), false));
+            Boolean isLoggedIn = MyPrefs.getBoolean(getString(R.string.isLogged), false);
+            auActiveUser.setIsLoggedIn(isLoggedIn);
             //ID
             auActiveUser.setUserID(MyPrefs.getString(getString(R.string.UserID), ""));
             //strName = "";
@@ -125,6 +126,11 @@ public class ChatRoom extends AppCompatActivity {
             String strHolderImageURL = MyPrefs.getString(getString(R.string.profileImageURL), "");
             auActiveUser.setStrProfileImageURL(strHolderImageURL);
 
+            //CHECK IF THERE IS A USER LOGGED IN, IF NOT RESTART APP
+            if (!isLoggedIn){
+                startActivity(new Intent(this, Splash.class));
+                finish();
+            }
 
             //DOWNLOAD IMAGE
             ImageRequest request = new ImageRequest(strHolderImageURL,

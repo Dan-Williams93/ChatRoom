@@ -212,7 +212,8 @@ public class RegisterUser extends AppCompatActivity {
                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-
+                                        etSecurityAnswer.setText("");
+                                        etConfirmSecurityAnswer.setText("");
                                     }
                                 });
 
@@ -234,6 +235,8 @@ public class RegisterUser extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
+                                    etPassword.setText("");
+                                    etConfirmPassword.setText("");
                                 }
                             });
 

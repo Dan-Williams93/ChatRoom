@@ -17,16 +17,19 @@
 
     <!-- SECURITY QUESTIONS-->
     <string-array name="security_questions">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Who was your best childhood friend?</item>
+        <item>What\'s your favourite make of car?</item>
+        <item>What was the first concert you went to?</item>
+        <item>What\'s your mother\'s maiden name?</item>
+        <item>What\'s your favourite film?</item>
+        <item>What\'s your first pets name?</item>
+        <item>What school did you go to?</item>
+        <item>What was the first street you lived on?</item>
+        <item>Who was your best teacher in school?</item>
         <item>Select A Question...</item>
     </string-array>
+
+
 
 
     <!--URL'S-->
@@ -43,6 +46,7 @@
     <!--<string name="ValidateEmailURL">http://82.20.226.191/chatroomapp/validate_email.php</string>-->
     <!--<string name="GetProfileImageURL">http://82.20.226.191/chatroomapp/getuserdetails.php</string>-->
     <!--<string name="SecurityRequestURL">http://82.17.251.148/chatroomapp/security_request.php</string>-->
+    <!--<string name="EmailRequestURL">http://82.20.226.191/chatroomapp/update_password.php</string>-->
     <!--HOME-->
 
 
@@ -58,10 +62,10 @@
     <string name="SendMessageURL">http://82.17.251.148/chatroomapp/send_message.php</string>
     <string name="ChatCheckURL">http://82.17.251.148/chatroomapp/check_private_chat.php</string>
     <string name="CreateChatURL">http://82.17.251.148/chatroomapp/create_pc.php</string>
-
     <string name="ValidateEmailURL">http://82.17.251.148/chatroomapp/validate_email.php</string>
     <string name="GetProfileImageURL">http://82.17.251.148/chatroomapp/getuserdetails.php</string>
     <string name="SecurityRequestURL">http://82.17.251.148/chatroomapp/security_request.php</string>
+    <string name="EmailRequestURL">http://82.17.251.148/chatroomapp/update_password.php</string>
     <!--82.17.251.148-->
 
 
@@ -80,7 +84,8 @@
     <!--<string name="ValidateEmailURL">http://82.20.226.191/chatroomapp/validate_email.php</string>-->
     <!--<string name="GetProfileImageURL">http://82.20.226.191/chatroomapp/getuserdetails.php</string>-->
 
-    <!--<string name="SecurityRequestURL">http://82.17.251.148/chatroomapp/security_request.php</string>-->
+    <!--<string name="SecurityRequestURL">http://82.20.226.191/chatroomapp/security_request.php</string>-->
+    <!--<string name="EmailRequestURL">http://82.20.226.191/chatroomapp/update_password.php</string>-->
     <!--82.20.226.191-->
 
 

@@ -101,8 +101,8 @@ public class Login extends AppCompatActivity {
 
     public void loginUser(View view) {
 
-        strEmail = etEmail.getText().toString();
-        strPassword = etPassword.getText().toString();
+        strEmail = etEmail.getText().toString().trim();
+        strPassword = etPassword.getText().toString().trim();
 
         if (strEmail.equals("") || strPassword.equals(null)){
             Toast.makeText(this, "Please enter your credentials", Toast.LENGTH_LONG).show();
@@ -207,10 +207,11 @@ public class Login extends AppCompatActivity {
                                     //endregion
 
                                 }
-                                else
+                                else {
                                     proLogin.setVisibility(View.INVISIBLE);
                                     btnLogin.setVisibility(View.VISIBLE);
 
+                                    //###########
                                     //region INVALID USER ALERT DIALOG
                                     ContextThemeWrapper ctw = new ContextThemeWrapper(Login.this, R.style.Theme_AppCompat_Dialog_Alert);
 
@@ -228,6 +229,7 @@ public class Login extends AppCompatActivity {
                                     AlertDialog invalidUserAlert = alertBuilder.create();
                                     invalidUserAlert.show();
                                     //endregion
+                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
