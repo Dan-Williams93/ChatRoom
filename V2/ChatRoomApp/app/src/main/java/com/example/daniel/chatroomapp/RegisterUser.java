@@ -146,6 +146,7 @@ public class RegisterUser extends AppCompatActivity {
                                             if (strResult.equals("0")) {
                                                 Register();
                                             } else {
+                                                //region INVALID EMAIL ALERT DIALOG
                                                 ContextThemeWrapper ctw = new ContextThemeWrapper(RegisterUser.this, R.style.Theme_AppCompat_Dialog_Alert);
 
                                                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctw);
@@ -159,8 +160,9 @@ public class RegisterUser extends AppCompatActivity {
                                                             }
                                                         });
 
-                                                AlertDialog passwordAlert = alertBuilder.create();
-                                                passwordAlert.show();
+                                                AlertDialog invalidEmailAlert = alertBuilder.create();
+                                                invalidEmailAlert.show();
+                                                //endregion
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -301,11 +303,28 @@ public class RegisterUser extends AppCompatActivity {
 
                         if(response.equals("1")){
 
-                            Intent loginIntent = new Intent(RegisterUser.this, Login.class);
-                            loginIntent.putExtra("username", strEmail);
-                            loginIntent.putExtra("password", strPassword);
-                            startActivity(loginIntent);
-                            finish();
+                            //region REGISTRATION SUCCESS ALERT DIALOG
+                            ContextThemeWrapper ctw = new ContextThemeWrapper(RegisterUser.this, R.style.Theme_AppCompat_Dialog_Alert);
+
+                            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctw);
+                            alertBuilder.setTitle("Success!")
+                                    .setMessage("Your account has been created")
+                                    .setIcon(R.drawable.ic_action_tick)
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            Intent loginIntent = new Intent(RegisterUser.this, Login.class);
+                                            loginIntent.putExtra("username", strEmail);
+                                            loginIntent.putExtra("password", strPassword);
+                                            startActivity(loginIntent);
+                                            finish();
+                                        }
+                                    });
+
+                            AlertDialog successAlert = alertBuilder.create();
+                            successAlert.show();
+                            //endregion
 
                         }else{
 

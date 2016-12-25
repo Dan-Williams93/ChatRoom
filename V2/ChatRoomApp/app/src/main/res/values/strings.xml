@@ -46,7 +46,11 @@
     <!--<string name="ValidateEmailURL">http://82.20.226.191/chatroomapp/validate_email.php</string>-->
     <!--<string name="GetProfileImageURL">http://82.20.226.191/chatroomapp/getuserdetails.php</string>-->
     <!--<string name="SecurityRequestURL">http://82.17.251.148/chatroomapp/security_request.php</string>-->
-    <!--<string name="EmailRequestURL">http://82.20.226.191/chatroomapp/update_password.php</string>-->
+    <!--<string name="EmailRequestURL">http://82.20.226.191/chatroomapp/reset_password.php</string>-->
+    <!--<string name="UpdatePasswordURL">http://82.20.226.191/chatroomapp/update_password.php</string>-->
+    <!--<string name="UpdateBioURL">http://82.20.226.191/chatroomapp/update_bio.php</string>-->
+
+    <!--<string name="UploadImageURL">http://82.20.226.191/chatroomapp/upload_image.php</string>-->
     <!--HOME-->
 
 
@@ -65,7 +69,12 @@
     <string name="ValidateEmailURL">http://82.17.251.148/chatroomapp/validate_email.php</string>
     <string name="GetProfileImageURL">http://82.17.251.148/chatroomapp/getuserdetails.php</string>
     <string name="SecurityRequestURL">http://82.17.251.148/chatroomapp/security_request.php</string>
-    <string name="EmailRequestURL">http://82.17.251.148/chatroomapp/update_password.php</string>
+    <string name="EmailRequestURL">http://82.17.251.148/chatroomapp/reset_password.php</string>
+
+    <string name="UpdatePasswordURL">http://82.17.251.148/chatroomapp/update_password.php</string>
+    <string name="UpdateBioURL">http://882.17.251.148/chatroomapp/update_bio.php</string>
+
+    <string name="UploadImageURL">http://82.17.251.148/chatroomapp/upload_image.php</string>
     <!--82.17.251.148-->
 
 
@@ -85,7 +94,11 @@
     <!--<string name="GetProfileImageURL">http://82.20.226.191/chatroomapp/getuserdetails.php</string>-->
 
     <!--<string name="SecurityRequestURL">http://82.20.226.191/chatroomapp/security_request.php</string>-->
-    <!--<string name="EmailRequestURL">http://82.20.226.191/chatroomapp/update_password.php</string>-->
+    <!--<string name="EmailRequestURL">http://82.20.226.191/chatroomapp/reset_password.php</string>-->
+    <!--<string name="UpdatePasswordURL">http://82.20.226.191/chatroomapp/update_password.php</string>-->
+    <!--<string name="UpdateBioURL">http://82.20.226.191/chatroomapp/update_bio.php</string>-->
+
+    <!--<string name="UploadImageURL">http://82.20.226.191/chatroomapp/upload_image.php</string>-->
     <!--82.20.226.191-->
 
 

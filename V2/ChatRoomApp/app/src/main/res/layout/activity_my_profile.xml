@@ -14,6 +14,7 @@
     android:background="@drawable/roomchatgradient">
 
     <ScrollView
+        android:id="@+id/svWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -22,72 +23,134 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- PROFILE IMAGE -->
             <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:gravity="center"
-                android:layout_gravity="center">
+                android:id="@+id/relProfileImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp">
 
                 <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/roomchatapp_logo"
-                    android:id="@+id/imgProfilePic" />
+                    android:id="@+id/imProfileImage"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerInParent="true"
+
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/roomchaticon"/>
 
                 <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
+                    android:id="@+id/imbtnImageChange"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_alignParentBottom="true"
-                    android:visibility="invisible"
-                    android:id="@+id/imbtEditProfilePic"
-                    android:onClick="ChangeProfilePic"
-                    android:src="@android:drawable/ic_menu_edit"/>
+                    android:layout_alignEnd="@+id/imProfileImage"
+
+                    android:onClick="selectProfileImage"
+
+                    android:src="@drawable/ic_mode_edit"
+                    android:backgroundTint="@color/colorStatus"
+                    android:background="@drawable/rounded_button"
+
+                    android:visibility="gone"/>
+
 
             </RelativeLayout>
+            <!-- END PROFILE IMAGE -->
 
+            <!-- NAME -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/custom_border">
 
-                <EditText
+                <TextView
+                    android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="NAME\nDani Williams"
                     android:gravity="center"
-                    android:layout_centerVertical="true"
-                    android:enabled="false"
-                    android:inputType="none"
-                    android:id="@+id/etName" />
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="25sp"
+                    android:text="Daniel Williams"
+                    />
 
             </LinearLayout>
+            <!-- END NAME -->
 
-
-            <LinearLayout
+            <!-- CHANGE BIO -->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/custom_border">
+                android:background="@drawable/custom_border"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tvChangeBio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Personal Bio"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <ImageButton
+                    android:id="@+id/imbtnBioDrop"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_expand_more_white"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:onClick="showBioOptions"
+                    android:backgroundTint="@color/colorStatus"
+                    android:background="@drawable/rounded_button"/>
 
                 <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="BIO - Not Set"
-                        android:layout_centerVertical="true"
-                        android:enabled="false"
-                        android:inputType="none"
-                        android:id="@+id/etBio" />
+                    android:id="@+id/etPersonalBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvChangeBio"
+                    android:hint="Bio"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="@android:color/white"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"/>
 
-            </LinearLayout>
+                <Button
+                    android:id="@+id/btnChangeBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etPersonalBio"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="80dp"
+                    android:paddingRight="80dp"
+
+                    android:onClick="changeBio"
+
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@color/colorStatus"
+                    android:drawableLeft="@drawable/ic_action_save"
+                    android:drawablePadding="0dp"
+
+                    android:text="Save Changes"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+            <!-- END CHANGE BIO -->
 
             <!-- CHANGE PASSWORD -->
             <RelativeLayout
+                android:id="@+id/relPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_border">
+                android:background="@drawable/custom_border"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/tvChangePass"
@@ -155,11 +218,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/etNewPasswordConfirm"
-                    android:onClick="changePassword"
-                    android:text="Change"
                     android:layout_marginTop="20dp"
+                    android:paddingLeft="80dp"
+                    android:paddingRight="80dp"
+
+                    android:onClick="changePassword"
+                    android:text="Save Changes"
+
+                    android:drawableLeft="@drawable/ic_action_save"
+                    android:drawablePadding="0dp"
                     android:background="@drawable/rounded_button"
                     android:backgroundTint="@color/colorStatus"
+
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
                     android:visibility="gone"/>
@@ -167,36 +237,28 @@
             </RelativeLayout>
             <!-- END CHANGE PASSWORD -->
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ActiveChats"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ActiveGroups"/>
-
+            <!--SIGN OUT -->
             <Button
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="Edit Profile"
-                android:drawableLeft="@android:drawable/ic_menu_edit"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:id="@+id/btnEdit"
-                android:onClick="revealEditOptions" />
-
-            <Button
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="Sign Out"
-                android:drawableLeft="@drawable/ic_action_halt"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:id="@+id/btnSignOut"
-                android:onClick="SignOutUser" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="120dp"
+                android:paddingRight="110dp"
+
+                android:onClick="SignOutUser"
+                android:text="Sign Out"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+
+                android:drawableLeft="@drawable/ic_action_halt"
+                android:drawablePadding="0dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="@color/colorStatus"
+
+                android:visibility="visible"/>
+            <!--SIGN OUT -->
 
         </LinearLayout>
 

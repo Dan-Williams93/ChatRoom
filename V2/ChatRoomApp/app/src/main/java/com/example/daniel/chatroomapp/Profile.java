@@ -44,12 +44,17 @@ public class Profile extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         strActiveUserID = auActiveUser.getUserID();
+
+        //region INITIATE URL'S
         strChatCheckURL = getString(R.string.ChatCheckURL);
         strCreateChatURL = getString(R.string.CreateChatURL);
+        //endregion
 
+        //region VIEW CASTING
         imgProfileImage = (ImageView)findViewById(R.id.imgProfileImage);
         tvName = (TextView)findViewById(R.id.tvName);
         tvBio = (TextView)findViewById(R.id.tvBio);
+        //endregion
 
         strUserName = getIntent().getStringExtra("username");
         strUserID = getIntent().getStringExtra("user_id");
@@ -60,9 +65,8 @@ public class Profile extends AppCompatActivity {
 
         imgProfileImage.setImageBitmap(bitProfileImage);
 
-
         tvName.setText(strUserName);
-        tvBio.setText("Bio:\n" + strUserBio);
+        tvBio.setText(strUserBio);
 
     }
 

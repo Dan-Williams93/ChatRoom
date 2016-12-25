@@ -213,12 +213,6 @@ public class PrivateMessages extends AppCompatActivity {
 
                                 if (jsonMessagesArray != null) {
 
-                                    //if (jsonMessagesArray.length() == jsonIDSArray.length()) {
-
-//                                        for (int i = 0; i < jsonMessagesArray.length(); i++) {
-//                                            arChatMessage.add(jsonMessagesArray.get(i).toString());
-//                                        }
-
                                     for (int i = 0; i < jsonIDSArray.length(); i++) {
 
                                         String mMessage;
@@ -241,32 +235,22 @@ public class PrivateMessages extends AppCompatActivity {
 
                                 if (jsonURLArray != null) {
 
+                                    final int arraySize = jsonURLArray.length();
+
                                     for (int i = 0; i < jsonURLArray.length(); i++) {
                                         String strURL = jsonURLArray.get(i).toString();
 
                                         arImageURLS.add(strURL);
 
                                         if (strURL.equals("not specified")){
-                                            arChatBitMap.add(bitDefault);
+                                            arChatBitMap.add(bitDefault); //ADDED TO ALLOW CHAT IMAGES TO LOAD
                                         }else{
-                                            ImageRequest request = new ImageRequest(strURL,
-                                                    new Response.Listener<Bitmap>() {
-                                                        @Override
-                                                        public void onResponse(Bitmap bitmap) {
-                                                            arChatBitMap.add(bitmap);
-                                                        }
-                                                    }, 0, 0, null,
-                                                    new Response.ErrorListener() {
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            arChatBitMap.add(bitDefault);
-                                                        }
-                                                    });
-                                            // Access the RequestQueue through your singleton class.
-                                            VolleyQueueSingleton.getmInstance(PrivateMessages.this).addToRequestQueue(request);
+                                            arChatBitMap.add(bitDefault);
                                         }
                                     }
                                 }
 
+                                //REMOVED TO ALLOW CHAT IMAGES TO LOAD
                                 PrivateMessageAdapter privateMessageAdapter = new PrivateMessageAdapter(PrivateMessages.this, arChatName, arChatBitMap, arChatMessage);
                                 lvChatResults.setAdapter(privateMessageAdapter);
 

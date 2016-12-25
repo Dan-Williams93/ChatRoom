@@ -82,10 +82,20 @@ public class Splash extends AppCompatActivity {
                 auCurrentUser.setUserProfileImage(bitDefaultProfileImage);
             }else{
 
-                //DOWNLOAD IMAGE FROM URL AND STORE IN ACTIVE USER USING VOLLEY
-                //ImageRequest imageRequest = new ImageRequest()
-                //Set default in respons
-                //set default in error
+                ImageRequest request = new ImageRequest(strProfileImageURL,
+                        new Response.Listener<Bitmap>() {
+                            @Override
+                            public void onResponse(Bitmap bitmap) {
+                                auCurrentUser.setUserProfileImage(bitmap);
+                            }
+                        }, 0, 0, null,
+                        new Response.ErrorListener() {
+                            public void onErrorResponse(VolleyError error) {
+                                auCurrentUser.setUserProfileImage(bitDefaultProfileImage);
+                            }
+                        });
+                // Access the RequestQueue through your singleton class.
+                VolleyQueueSingleton.getmInstance(Splash.this).addToRequestQueue(request);
             }
 
             auCurrentUser.setStrProfileImageURL(strProfileImageURL);

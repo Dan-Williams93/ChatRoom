@@ -20,6 +20,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
@@ -34,6 +35,7 @@ import java.util.Map;
 
 public class FindFriends extends AppCompatActivity {
 
+    //region GLOBAL VARIABLES
     private EditText etSearchFriends;
     private ListView lvResults;
     private TextView tvNoFriends;
@@ -47,6 +49,8 @@ public class FindFriends extends AppCompatActivity {
     private ArrayList<String> arFriendsBio = new ArrayList<String>();
     private ArrayList<Bitmap> arFriendProfileImage = new ArrayList<Bitmap>();
 
+    private ArrayList<String> arImageURLs = new ArrayList<String>();
+
     private Bitmap bitDefaultProfileImage;
     private Bitmap bitProfileImage;
 
@@ -54,6 +58,7 @@ public class FindFriends extends AppCompatActivity {
     private String strSearchCredential;
 
     private ActiveUser auCurrentUser;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,19 +171,20 @@ public class FindFriends extends AppCompatActivity {
                                 arFriendsBio.add(jsonMessage.getString("user_bio"));
 
                                 strProfileImageUrL = jsonMessage.getString("profile_image_url");
+                                arImageURLs.add(strProfileImageUrL);
 
                                 if (strProfileImageUrL.equals("not specified")){
                                     arFriendProfileImage.add(bitDefaultProfileImage);
                                 }else{
-
-                                    //DOWNLOAD IMAGE FROM URL AND STORE IN ACTIVE USER
+                                    arFriendProfileImage.add(bitDefaultProfileImage);
                                 }
-
                             }
-
                         }
+
                         FriendsArrayAdapter custom_listView_adapter = new FriendsArrayAdapter(FindFriends.this, arFriendsNames, arFriendProfileImage);
                         lvResults.setAdapter(custom_listView_adapter);
+
+
                     }else {
                         progLoading.setVisibility(View.INVISIBLE);
                         tvNoFriends.setVisibility(View.VISIBLE);
