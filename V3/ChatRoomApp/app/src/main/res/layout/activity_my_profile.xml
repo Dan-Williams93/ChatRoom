@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.daniel.chatroomapp.MyProfile"
+    android:orientation="vertical"
+    android:background="@drawable/roomchatgradient">
+
+    <ScrollView
+        android:id="@+id/svWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- PROFILE IMAGE -->
+            <RelativeLayout
+                android:id="@+id/relProfileImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp">
+
+                <ImageView
+                    android:id="@+id/imProfileImage"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerInParent="true"
+
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/roomchaticon"/>
+
+                <ImageButton
+                    android:id="@+id/imbtnImageChange"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignEnd="@+id/imProfileImage"
+
+                    android:onClick="selectProfileImage"
+
+                    android:src="@drawable/ic_mode_edit"
+                    android:backgroundTint="@color/colorStatus"
+                    android:background="@drawable/rounded_button"
+
+                    android:visibility="gone"/>
+
+
+            </RelativeLayout>
+            <!-- END PROFILE IMAGE -->
+
+            <!-- NAME -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/custom_border">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="25sp"
+                    android:text="Daniel Williams"
+                    />
+
+            </LinearLayout>
+            <!-- END NAME -->
+
+            <!-- CHANGE BIO -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_border"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tvChangeBio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Personal Bio"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <ImageButton
+                    android:id="@+id/imbtnBioDrop"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_expand_more_white"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:onClick="showBioOptions"
+                    android:backgroundTint="@color/colorStatus"
+                    android:background="@drawable/rounded_button"/>
+
+                <EditText
+                    android:id="@+id/etPersonalBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvChangeBio"
+                    android:hint="Bio"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="@android:color/white"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btnChangeBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etPersonalBio"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="80dp"
+                    android:paddingRight="80dp"
+
+                    android:onClick="changeBio"
+
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@color/colorStatus"
+                    android:drawableLeft="@drawable/ic_action_save"
+                    android:drawablePadding="0dp"
+
+                    android:text="Save Changes"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+            <!-- END CHANGE BIO -->
+
+            <!-- CHANGE PASSWORD -->
+            <RelativeLayout
+                android:id="@+id/relPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_border"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tvChangePass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Password"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <ImageButton
+                    android:id="@+id/imbtnPasswordDrop"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_expand_more_white"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:onClick="showPasswordOptions"
+                    android:backgroundTint="@color/colorStatus"
+                    android:background="@drawable/rounded_button"/>
+
+                <EditText
+                    android:id="@+id/etOldPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvChangePass"
+                    android:hint="Old Password"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="@android:color/white"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/etNewPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/etOldPassword"
+                    android:hint="New Password"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="@android:color/white"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/etNewPasswordConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/etNewPassword"
+                    android:hint="Confirm New Password"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="@android:color/white"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btnChangePass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etNewPasswordConfirm"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="80dp"
+                    android:paddingRight="80dp"
+
+                    android:onClick="changePassword"
+                    android:text="Save Changes"
+
+                    android:drawableLeft="@drawable/ic_action_save"
+                    android:drawablePadding="0dp"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@color/colorStatus"
+
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+            <!-- END CHANGE PASSWORD -->
+
+            <!--SIGN OUT -->
+            <Button
+                android:id="@+id/btnSignOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="120dp"
+                android:paddingRight="110dp"
+
+                android:onClick="SignOutUser"
+                android:text="Sign Out"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+
+                android:drawableLeft="@drawable/ic_action_halt"
+                android:drawablePadding="0dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="@color/colorStatus"
+
+                android:visibility="visible"/>
+            <!--SIGN OUT -->
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#302F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorStatus">#7800db</color>
+    <color name="colorTitle">#ad00d7</color>
+    <color name="colorSelf">#e6b2f3</color>
+    <color name="colorNotSelf">#c999f0</color>
+
+    <color name="colorDisabled">#a871d6</color>
+
+
+
+
+    <!-- #ad00d7 gallery button color-->
+</resources>

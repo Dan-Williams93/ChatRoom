@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "534371156320",
+    "firebase_url": "https://chatroomapp-fcb8f.firebaseio.com",
+    "project_id": "chatroomapp-fcb8f",
+    "storage_bucket": "chatroomapp-fcb8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534371156320:android:8f620cefb8648e29",
+        "android_client_info": {
+          "package_name": "com.example.daniel.chatroomapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534371156320-2doneujqnoqmh4kl2uesmfi6eahdb8i0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqb2aRk-UU-ArmQSiRQyGwqi6UpXIN8wU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
