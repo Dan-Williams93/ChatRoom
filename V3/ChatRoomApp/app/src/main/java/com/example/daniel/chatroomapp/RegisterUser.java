@@ -176,7 +176,7 @@ public class RegisterUser extends AppCompatActivity {
                                 ContextThemeWrapper ctw = new ContextThemeWrapper(RegisterUser.this, R.style.Theme_AppCompat_Dialog_Alert);
 
                                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctw);
-                                alertBuilder.setTitle("Registration Failed!")
+                                alertBuilder.setTitle("Registration Failed 1 !")
                                         .setMessage("Please try again.\n If the problem persists please contact the RoomChat team")
                                         .setIcon(R.drawable.ic_action_warning)
                                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -332,7 +332,7 @@ public class RegisterUser extends AppCompatActivity {
                             ContextThemeWrapper ctw = new ContextThemeWrapper(RegisterUser.this, R.style.Theme_AppCompat_Dialog_Alert);
 
                             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctw);
-                            alertBuilder.setTitle("Registration Failed!")
+                            alertBuilder.setTitle("Registration Failed 3 !")
                                     .setMessage("Please try again.\n If the problem persists please contact the RoomChat team")
                                     .setIcon(R.drawable.ic_action_warning)
                                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -355,7 +355,7 @@ public class RegisterUser extends AppCompatActivity {
                 ContextThemeWrapper ctw = new ContextThemeWrapper(RegisterUser.this, R.style.Theme_AppCompat_Dialog_Alert);
 
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctw);
-                alertBuilder.setTitle("Registration Failed!")
+                alertBuilder.setTitle("Registration Failed 4 !")
                         .setMessage("Please try again.\n If the problem persists please contact the RoomChat team")
                         .setIcon(R.drawable.ic_action_warning)
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {

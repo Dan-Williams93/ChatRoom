@@ -546,6 +546,13 @@ public class MyProfile extends AppCompatActivity {
                             AlertDialog successAlert = alertBuilder.create();
                             successAlert.show();
                             //endregion
+
+                            SharedPreferences MyPrefs = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
+                            SharedPreferences.Editor editor = MyPrefs.edit();
+                            editor.putString(getString(R.string.UserBio), strNewBio);
+                            editor.commit();
+
+                            auCurrentUsser.setBio(strNewBio);
                         }else{
                             //region ERROR ALERT DIALOG
                             ContextThemeWrapper ctw = new ContextThemeWrapper(MyProfile.this, R.style.Theme_AppCompat_Dialog_Alert);
@@ -771,20 +778,55 @@ public class MyProfile extends AppCompatActivity {
 
     public void SignOutUser(View view) {
 
-        SharedPreferences ChatPrefs = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
-        String strRecentToken = ChatPrefs.getString(getString(R.string.FCM_TOKEN_PREF), "");
+        //region CONFIRM ALERT DIALOG
+        ContextThemeWrapper ctw = new ContextThemeWrapper(MyProfile.this, R.style.Theme_AppCompat_Dialog_Alert);
 
-        SharedPreferences.Editor editor = ChatPrefs.edit();
-        editor.clear();
-        editor.commit();
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctw);
+        alertBuilder.setTitle("Are you sure?")
+                .setMessage("If you log out you will need to provide your login details to gain access to your messages.")
+                .setIcon(R.drawable.ic_action_warning)
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-        editor.putString(getString(R.string.FCM_TOKEN_PREF), strRecentToken);
-        editor.commit();
+                    }
+                })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-        auCurrentUsser.userLogOut();
-        startActivity(new Intent(this, Login.class));
-        finish();
+                        SharedPreferences ChatPrefs = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
+                        String strRecentToken = ChatPrefs.getString(getString(R.string.FCM_TOKEN_PREF), "");
 
+                        SharedPreferences.Editor editor = ChatPrefs.edit();
+                        editor.clear();
+                        editor.commit();
 
+                        editor.putString(getString(R.string.FCM_TOKEN_PREF), strRecentToken);
+                        editor.commit();
+
+                        auCurrentUsser.userLogOut();
+                        startActivity(new Intent(MyProfile.this, Login.class));
+                        finish();
+                    }
+                });
+
+        AlertDialog errorAlert = alertBuilder.create();
+        errorAlert.show();
+        //endregion
+
+//        SharedPreferences ChatPrefs = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
+//        String strRecentToken = ChatPrefs.getString(getString(R.string.FCM_TOKEN_PREF), "");
+//
+//        SharedPreferences.Editor editor = ChatPrefs.edit();
+//        editor.clear();
+//        editor.commit();
+//
+//        editor.putString(getString(R.string.FCM_TOKEN_PREF), strRecentToken);
+//        editor.commit();
+//
+//        auCurrentUsser.userLogOut();
+//        startActivity(new Intent(this, Login.class));
+//        finish();
     }
 }

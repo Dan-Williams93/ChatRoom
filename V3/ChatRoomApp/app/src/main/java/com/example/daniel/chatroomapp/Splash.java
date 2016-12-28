@@ -80,6 +80,7 @@ public class Splash extends AppCompatActivity {
             //getimage or set efault
             if (strProfileImageURL.equals("not specified")){
                 auCurrentUser.setUserProfileImage(bitDefaultProfileImage);
+                UpdateToken();
             }else{
 
                 ImageRequest request = new ImageRequest(strProfileImageURL,

@@ -23,8 +23,8 @@
             android:orientation="horizontal">
 
             <com.android.volley.toolbox.NetworkImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:id="@+id/rowImage"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/anonymous"
